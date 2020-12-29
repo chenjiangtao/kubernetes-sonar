@@ -16,32 +16,32 @@ spec:
     spec:
       containers:
       - name: sonar-deployment
+        # sonarqube 7.9 之后不再使用mysql
         image: sonarqube:7.9-community # jdk 8 use sonar 7.X,jdk 11 use sonar 8.X
         ports:
         - name: sonarqube
           containerPort: 9000
-        env:
-        - name: SONARQUBE_JDBC_USERNAME
-          value: sonar
-        - name: SONARQUBE_JDBC_PASSWORD
-          value: sonar
-#        - name: "SONARQUBE_JDBC_PASSWORD"
-#            valueFrom:
-#              secretKeyRef:
-#                name: sonarqube-mysql-secret
-#                key: password
-        - name: SONARQUBE_JDBC_URL
-#          value: jdbc:mysql://sonar-mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
-          value: "jdbc:mysql://sonar-mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true" #DB URL
-        volumeMounts:
-         - name: sonar-extensions
-           mountPath: /opt/sonarqube/extensions
-         - name: sonar-data
-           mountPath: /opt/sonarqube/data
-      volumes:
-        - name: sonar-data
-          persistentVolumeClaim:
-            claimName: sonar-data
-        - name: sonar-extensions
-          persistentVolumeClaim:
-            claimName: sonar-extensions
+#        env:
+#        - name: SONARQUBE_JDBC_USERNAME
+#          value: sonar
+#        - name: SONARQUBE_JDBC_PASSWORD
+#          value: sonar
+##        - name: "SONARQUBE_JDBC_PASSWORD"
+##            valueFrom:
+##              secretKeyRef:
+##                name: sonarqube-mysql-secret
+##                key: password
+#        - name: SONARQUBE_JDBC_URL
+##          value: jdbc:mysql://sonar-mysql:3306/sonar?useUnicode=true&characterEncoding=utf8&rewriteBatchedStatements=true
+#        volumeMounts:
+#         - name: sonar-extensions
+#           mountPath: /opt/sonarqube/extensions
+#         - name: sonar-data
+#           mountPath: /opt/sonarqube/data
+#      volumes:
+#        - name: sonar-data
+#          persistentVolumeClaim:
+#            claimName: sonar-data
+#        - name: sonar-extensions
+#          persistentVolumeClaim:
+#            claimName: sonar-extensions
